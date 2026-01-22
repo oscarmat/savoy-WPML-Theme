@@ -272,12 +272,12 @@
 				'type' 		=> 'image_select',
 				'title' 	=> __( 'Layout', 'nm-framework-admin' ),
 				'options'	=> array(
-                    'centered'              => array( 'alt' => 'Centered logo', 'img' => NM_URI . '/assets/img/option-panel/header-centered.png' ),
-					'default' 	            => array( 'alt' => 'Default', 'img' => NM_URI . '/assets/img/option-panel/header-default.png' ),
-                    'menu-centered'         => array( 'alt' => 'Centered menu', 'img' => NM_URI . '/assets/img/option-panel/header-menu-centered.png' ),
-                    'stacked'               => array( 'alt' => 'Stacked', 'img' => NM_URI . '/assets/img/option-panel/header-stacked.png' ),
-                    'stacked-logo-centered' => array( 'alt' => 'Stacked logo centered', 'img' => NM_URI . '/assets/img/option-panel/header-stacked-logo-centered.png' ),
-                    'stacked-centered'      => array( 'alt' => 'Stacked centered', 'img' => NM_URI . '/assets/img/option-panel/header-stacked-centered.png' )
+                    'centered'              => array( 'title' => 'Centered Logo', 'img' => NM_URI . '/assets/img/option-panel/header-centered.png' ),
+					'default' 	            => array( 'title' => 'Logo & Menu Left', 'img' => NM_URI . '/assets/img/option-panel/header-default.png' ),
+                    'menu-centered'         => array( 'title' => 'Centered Menu', 'img' => NM_URI . '/assets/img/option-panel/header-menu-centered.png' ),
+                    'stacked'               => array( 'title' => 'Stacked', 'img' => NM_URI . '/assets/img/option-panel/header-stacked.png' ),
+                    'stacked-logo-centered' => array( 'title' => 'Stacked, Logo Centered', 'img' => NM_URI . '/assets/img/option-panel/header-stacked-logo-centered.png' ),
+                    'stacked-centered'      => array( 'title' => 'Stacked Centered', 'img' => NM_URI . '/assets/img/option-panel/header-stacked-centered.png' )
 				),
 				'default' 	=> 'centered'
 			),
@@ -683,6 +683,24 @@
 				'icon'	=> true,
 				'type'	=> 'info',
 				'raw'	=> '<h3 style="margin: 0;">' . __( 'Menu: Mobile', 'nm-framework-admin' ) . '</h3>',
+			),
+            array(
+				'id' 		=> 'menu_mobile_layout',
+				'type' 		=> 'image_select',
+				'title' 	=> __( 'Layout', 'nm-framework-admin' ),
+				'options'	=> array(
+                    'side'  => array( 'title' => 'Side', 'img' => NM_URI . '/assets/img/option-panel/mobile-menu-side.png' ),
+                    'top'   => array( 'title' => 'Top', 'img' => NM_URI . '/assets/img/option-panel/mobile-menu-top.png' ),
+				),
+				'default' 	=> 'side',
+			),
+            array(
+				'id'		=> 'menu_mobile_desktop',
+				'type'		=> 'switch', 
+				'title'		=> __( 'Enable on Desktop', 'nm-framework-admin' ),
+				'default'	=> 0,
+				'on'		=> 'Enable',
+				'off'		=> 'Disable'
 			),
             array(
 				'id'		=> 'menu_mobile_secondary_menu',
@@ -1231,7 +1249,7 @@
 				'id'			=> 'slide_menu_font_color',
 				'type'			=> 'color',
 				'title'			=> __( 'Font Color', 'nm-framework-admin' ),
-                'default'		=> '#555555',
+                'default'		=> '#707070',
 				'transparent'	=> false,
 				'validate'		=> 'color'
 			),
@@ -2902,6 +2920,27 @@
 				'off'		=> 'Disable'
 			),
             array (
+				'id' 	=> 'shop_search_keywords_info',
+				'icon'	=> true,
+				'type'	=> 'info',
+				'raw'	=> '<h3 style="margin: 0;">' . __( 'Search - Keywords (header)', 'nm-framework-admin' ) . '</h3>',
+			),
+            array (
+				'id'		=> 'shop_search_keywords_title',
+				'type'		=> 'text',
+				'title'		=> __( 'Title', 'nm-framework-admin' ),
+                'default'	=> 'Suggested Searches',
+                'validate'	=> 'html',
+			),
+            array (
+				'id'            => 'shop_search_keywords',
+				'type'		    => 'text',
+				'title'         => __( 'Keywords', 'nm-framework-admin' ),
+                'default'	    => '',
+                'description'   => __( 'Enter a comma separated list of search keywords' ),
+                'validate'      => 'no_html',
+			),
+            array (
 				'id' 	=> 'shop_search_suggestions_info',
 				'icon'	=> true,
 				'type'	=> 'info',
@@ -2982,13 +3021,13 @@
 				'type' 		=> 'image_select',
 				'title' 	=> __( 'Layout', 'nm-framework-admin' ),
 				'options'	=> array(
-                    'default'                               => array( 'alt' => 'Vertical Tumbnails', 'img' => NM_URI . '/assets/img/option-panel/product-layout-default.png' ),
-					'default-thumbs-h'                      => array( 'alt' => 'Horizontal Thumbnails', 'img' => NM_URI . '/assets/img/option-panel/product-layout-default-thumbs-h.png' ),
-                    'scrolling scrolling-single'            => array( 'alt' => 'Scrolling', 'img' => NM_URI . '/assets/img/option-panel/product-layout-scrolling.png' ),
-                    'scrolling scrolling-grid'              => array( 'alt' => 'Scrolling Grid', 'img' => NM_URI . '/assets/img/option-panel/product-layout-scrolling-grid.png' ),
-                    'scrolling scrolling-variable-grid'     => array( 'alt' => 'Scrolling Variable Grid', 'img' => NM_URI . '/assets/img/option-panel/product-layout-scrolling-variable-grid.png' ),
-                    'scrolling scrolling-variable-grid-2'   => array( 'alt' => 'Scrolling Variable Grid 2', 'img' => NM_URI . '/assets/img/option-panel/product-layout-scrolling-variable-grid-2.png' ),
-                    'expanded'                              => array( 'alt' => 'Expanded', 'img' => NM_URI . '/assets/img/option-panel/product-layout-expanded.png' )
+                    'default'                               => array( 'title' => 'Vertical Tumbnails', 'img' => NM_URI . '/assets/img/option-panel/product-layout-default.png' ),
+					'default-thumbs-h'                      => array( 'title' => 'Horizontal Thumbnails', 'img' => NM_URI . '/assets/img/option-panel/product-layout-default-thumbs-h.png' ),
+                    'scrolling scrolling-single'            => array( 'title' => 'Scrolling', 'img' => NM_URI . '/assets/img/option-panel/product-layout-scrolling.png' ),
+                    'scrolling scrolling-grid'              => array( 'title' => 'Scrolling Grid', 'img' => NM_URI . '/assets/img/option-panel/product-layout-scrolling-grid.png' ),
+                    'scrolling scrolling-variable-grid'     => array( 'title' => 'Scrolling Variable Grid', 'img' => NM_URI . '/assets/img/option-panel/product-layout-scrolling-variable-grid.png' ),
+                    'scrolling scrolling-variable-grid-2'   => array( 'title' => 'Scrolling Variable Grid 2', 'img' => NM_URI . '/assets/img/option-panel/product-layout-scrolling-variable-grid-2.png' ),
+                    'expanded'                              => array( 'title' => 'Expanded', 'img' => NM_URI . '/assets/img/option-panel/product-layout-expanded.png' )
 				),
 				'default' 	=> 'default'
 			),

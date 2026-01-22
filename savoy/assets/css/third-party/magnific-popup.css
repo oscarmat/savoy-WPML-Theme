@@ -7,7 +7,7 @@
   height: 100%;
   z-index: 1042;
   overflow: hidden;
-  backdrop-filter: var(--nm--page-overlay-blur);
+  /*backdrop-filter: var(--nm--page-overlay-blur);*/
   background: var(--nm--page-overlay-background);
   opacity: 0; }
 

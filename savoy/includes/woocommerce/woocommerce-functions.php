@@ -353,8 +353,9 @@ function nm_product_get_sale_percent( $product ) {
         // Return the highest product variation sale percent
         $final_sale_percent = $highest_sale_percent;
     } else {
-        $regular_price  = intval( $product->get_regular_price() );
-        $sale_price     = intval( $product->get_sale_price() );
+        $regular_price  = floatval( $product->get_regular_price() );
+        $sale_price     = floatval( $product->get_sale_price() );
+        
         $sale_percent   = 0;
         
         // Make sure the percentage value can be calculated
@@ -421,8 +422,8 @@ add_filter( 'woocommerce_product_reviews_tab_title', 'nm_woocommerce_reviews_tab
 function nm_upsell_related_products_args( $args ) {
     global $nm_theme_options;
 
-    $args['posts_per_page'] = $nm_theme_options['product_upsell_related_per_page'];
-    $args['columns'] = $nm_theme_options['product_upsell_related_columns'];
+    $args['posts_per_page'] = intval( $nm_theme_options['product_upsell_related_per_page'] );
+    $args['columns'] = intval( $nm_theme_options['product_upsell_related_columns'] );
     //$args['orderby'] = 'rand'; // Note: Use to change product order
     return $args;
 }
@@ -479,7 +480,8 @@ function nm_get_cart_hash() {
  *	Cart: Cross-sells per page
  */
 add_filter( 'woocommerce_cross_sells_total', function() { 
-    global $nm_theme_options; return $nm_theme_options['product_upsell_related_per_page'];
+    global $nm_theme_options;
+    return intval( $nm_theme_options['product_upsell_related_per_page'] );
 } );
 
 

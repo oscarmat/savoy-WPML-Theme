@@ -824,6 +824,15 @@
             $nm_body_class[] = 'header-border-' . $nm_theme_options['header_border'];
         }
         
+        // Header: Mobile menu
+        $nm_body_class[] = 'mobile-menu-layout-' . $nm_theme_options['menu_mobile_layout'];
+        if ( $nm_theme_options['menu_mobile_layout'] === 'side' ) {
+            $nm_body_class[] = apply_filters( 'nm_mobile_menu_side_panels_class', 'mobile-menu-panels' );
+        }
+        if ( $nm_theme_options['menu_mobile_desktop'] ) {
+            $nm_body_class[] = 'mobile-menu-desktop';
+        }
+        
         // Cart panel classes
         $nm_body_class[] = 'cart-panel-' . $nm_theme_options['widget_panel_color'];
         if ( $nm_globals['cart_panel_qty_throttle'] > 0 ) {
@@ -982,13 +991,16 @@
     
 	if ( ! function_exists( 'nm_register_menus' ) ) {
 		function nm_register_menus() {
-			register_nav_menus( array(
-				'top-bar-menu'	=> esc_html__( 'Top Bar', 'nm-framework' ),
-				'main-menu'		=> esc_html__( 'Header Main', 'nm-framework' ),
-				'right-menu'	=> esc_html__( 'Header Secondary (Right side)', 'nm-framework' ),
-				'mobile-menu'   => esc_html__( 'Mobile', 'nm-framework-admin' ),
-                'footer-menu'	=> esc_html__( 'Footer Bar', 'nm-framework' )
-			) );
+			register_nav_menus(
+                array(
+                    'top-bar-menu'          => esc_html__( 'Top Bar', 'nm-framework' ),
+                    'main-menu'             => esc_html__( 'Header Main', 'nm-framework' ),
+                    'right-menu'            => esc_html__( 'Header Secondary', 'nm-framework' ),
+                    'mobile-menu'           => esc_html__( 'Mobile', 'nm-framework-admin' ),
+                    'mobile-menu-secondary' => esc_html__( 'Mobile Secondary', 'nm-framework-admin' ),
+                    'footer-menu'           => esc_html__( 'Footer Bar', 'nm-framework' ),
+                )
+            );
 		}
 	}
 	add_action( 'init', 'nm_register_menus' );

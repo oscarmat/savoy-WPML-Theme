@@ -60,8 +60,8 @@ class NM_Search_Suggestions {
         $suggestions = '';
         
         if ( ! $this->transient_enabled || false === ( $suggestions = get_transient( $transient_name ) ) ) {
-            global $woocommerce;
-            $ordering_args = $woocommerce->query->get_catalog_ordering_args( 'title', 'asc' );
+            /*global $woocommerce;
+            $ordering_args = $woocommerce->query->get_catalog_ordering_args( 'title', 'asc' );*/
             
             $args = apply_filters( 'nm_search_suggestions_query_args', array(
                 's'                   => $search_keyword,
@@ -70,7 +70,8 @@ class NM_Search_Suggestions {
                 'ignore_sticky_posts' => 1,
                 //'orderby'             => $ordering_args['orderby'],
                 'orderby'             => 'relevance',
-                'order'               => $ordering_args['order'],
+                //'order'               => $ordering_args['order'],
+                'order'               => 'DESC',
                 'posts_per_page'      => $this->max_results,
                 'suppress_filters'    => false
             ) );

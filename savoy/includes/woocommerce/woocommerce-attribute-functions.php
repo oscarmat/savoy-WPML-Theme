@@ -328,7 +328,7 @@ function nm_template_loop_attributes( $product = null ) {
                                     $variation_image_attr = nm_woocommerce_get_variation_image_attr( $available_variations, $attribute_name, $term->slug, $product_thumb );
                                     $image_id = absint( get_term_meta( $term->term_id, 'nm_pa_image_thumbnail_id', true ) );
                                     $image_size = apply_filters( 'nm_template_loop_attributes_image_size', 'woocommerce_thumbnail' );
-                                    $image = ( $image_id ) ? wp_get_attachment_image_src( $image_id, $image_size ) : '';
+                                    $image = ( $image_id ) ? wp_get_attachment_image_src( $image_id, $image_size ) : array( '', '', '' );
                                     $image_alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
                                     
                                     //$html .= '<a href="' . esc_url( $url ) . '" class="nm-shop-loop-attribute-link' . esc_attr( $selected_class ) . '"' . $variation_image_attr . '>';

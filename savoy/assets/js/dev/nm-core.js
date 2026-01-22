@@ -390,29 +390,25 @@
 			});
             
             
-            /* Media query matching */
-            var _hideMobileMenu = function(mediaQuery) {
-                if (mediaQuery.matches && self.$body.hasClass(self.classMobileMenuOpen)) {
-                    self.pageOverlayHide();
-                }
-            },
-            /*_hideHeaderSearch = function(mediaQuery) {
-                if (mediaQuery.matches && self.$body.hasClass(self.classSearchOpen)) {
-                    self.pageOverlayHide();
-                }
-            },*/            
-            breakpointMobileMenu = window.matchMedia('(min-width: 992px)'),
-            breakpointHeaderSearch = window.matchMedia('(max-width: 991px)');
-            // Use "addEventListener" when available ("addListener" is deprecated)
-            try {
-                breakpointMobileMenu.addEventListener('change', _hideMobileMenu);
-                //breakpointHeaderSearch.addEventListener('change', _hideHeaderSearch);
-            } catch(err1) {
+            /* Mobile menu: Hide menu on Desktop using media query matching */
+            if (! self.$body.hasClass('mobile-menu-desktop')) { // Make sure mobile menu is disabled for desktop
+                var _hideMobileMenu = function(mediaQuery) {
+                    if (mediaQuery.matches && self.$body.hasClass(self.classMobileMenuOpen)) {
+                        self.pageOverlayHide();
+                    }
+                };
+                
+                var breakpointMobileMenu = window.matchMedia('(min-width: 992px)');
+                
+                // Use "addEventListener" when available ("addListener" is deprecated)
                 try {
-                    breakpointMobileMenu.addListener(_hideMobileMenu);
-                    //breakpointHeaderSearch.addListener(_hideHeaderSearch);
-                } catch(err2) {
-                    console.error('NM: Media query matching - ' + err2);
+                    breakpointMobileMenu.addEventListener('change', _hideMobileMenu);
+                } catch(err1) {
+                    try {
+                        breakpointMobileMenu.addListener(_hideMobileMenu);
+                    } catch(err2) {
+                        console.error('NM: Media query matching - ' + err2);
+                    }
                 }
             }
             
@@ -487,7 +483,7 @@
             }
 			
             
-			/* Bind: Mobile menu button */
+			/* Bind: Mobile menu - Header button */
 			self.$mobileMenuBtn.on('click', function(e) {
 				e.preventDefault();
 				
@@ -498,6 +494,12 @@
 				}
 			});
 			
+            /* Bind: Mobile menu - Panel close button */
+			$('#nm-mobile-menu-close-button').on('click', function(e) {
+				e.preventDefault();
+				self.mobileMenuClose(true); // Args: hideOverlay
+			});
+            
 			/* Function: Mobile menu - Toggle sub-menu */
 			var _mobileMenuToggleSub = function($menu, $subMenu) {
                 $menu.toggleClass('active');
@@ -508,10 +510,16 @@
 			self.$mobileMenuLi.on('click.nmMenuToggle', function(e) {
                 e.stopPropagation(); // Prevent click event on parent menu link
                 
+                var $this = $(this);
+                
+                // Prevent closing menu when clicking outside a menu-item in an open menu "panel"
+                if (self.$body.hasClass('mobile-menu-panels') && ! $(e.target).is('li, a, .nm-menu-toggle')) {
+                    return;
+                }
+                
                 self.$document.trigger('nm_mobile_menu_toggle', [e, this]);
                 
-				var $this = $(this),
-					$thisSubMenu = $this.children('ul');
+				var $thisSubMenu = $this.children('.sub-menu');
                 
                 if ($thisSubMenu.length) {
                     // Prevent toggle when "nm-notoggle" class is added -and- the "plus" icon wasn't clicked
@@ -521,6 +529,22 @@
                     _mobileMenuToggleSub($this, $thisSubMenu);
 				}
 			});
+            
+            /* Bind: Mobile menu "back" button */
+            $('.nm-mobile-sub-menu-back-button').on('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                var $menu = $(this).closest('.menu-item'),
+					$thisSubMenu = $menu.children('.sub-menu');
+                
+                $menu.addClass('hide-panel');
+                
+                setTimeout(function() {
+                    _mobileMenuToggleSub($menu, $thisSubMenu);
+                    $menu.removeClass('hide-panel');
+                }, 250);
+            });
 			
 			
 			/* Bind: Cart panel */
@@ -683,10 +707,10 @@
             }
 
             // Hide open menus (first level only)
-            setTimeout(function() {
+            /*setTimeout(function() {
                 $('#nm-mobile-menu-main-ul').children('.active').removeClass('active').children('ul').removeClass('open');
                 $('#nm-mobile-menu-secondary-ul').children('.active').removeClass('active').children('ul').removeClass('open');
-            }, 250);
+            }, 250);*/
         },
         
         
@@ -698,10 +722,10 @@
             
             // Checkout page fix: Make sure the login form is visible
             $('#nm-login-wrap').children('.login').css('display', '');
-
+            
             $.magnificPopup.open({
                 mainClass: 'nm-login-popup nm-mfp-fade-in',
-                alignTop: true,
+                //alignTop: true,
                 closeMarkup: '<a class="mfp-close nm-font nm-font-close2"></a>',
                 removalDelay: 180,
                 closeOnBgClick: false,

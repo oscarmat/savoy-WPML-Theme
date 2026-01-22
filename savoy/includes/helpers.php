@@ -139,7 +139,8 @@
             
             $social_profiles = array();
             foreach( $nm_theme_options['social_profiles'] as $slug => $url ) {
-                if ( $url !== '' ) {
+                // Make sure URL is valid (the Redux framework will enter setting placeholder text as URL when settings panel/section is reset)
+                if ( $url !== '' && filter_var( $url, FILTER_VALIDATE_URL ) !== false ) {
                     if ( $slug == 'email' ) {
                         $url = 'mailto:' . $url;
                     }

@@ -39,7 +39,7 @@ if ( isset( $is_popup ) ) {
 <div id="customer_login" class="nm-myaccount-login">
     <div class="nm-myaccount-login-inner">
 		
-        <div id="nm-login-wrap" class="inline slide-up fade-in">
+        <div id="nm-login-wrap">
             <h2><?php esc_html_e( 'Log in', 'woocommerce' ); ?></h2>
     
             <form<?php echo $popup_form_action_escaped; ?> class="login" method="post" novalidate>
@@ -76,7 +76,7 @@ if ( isset( $is_popup ) ) {
                     <?php if ( $show_reg_form ) : ?>
                     <div class="nm-login-form-divider"><span><?php esc_html_e( 'Or', 'nm-framework' ); ?></span></div>
                     
-                    <a href="#" id="nm-show-register-button" class="button border"><?php esc_html_e( 'Create an account', 'nm-framework' );//esc_html_e( 'Register', 'woocommerce' ); ?></a>
+                    <a href="#register" id="nm-show-register-button" class="button border"><?php esc_html_e( 'Create an account', 'nm-framework' );//esc_html_e( 'Register', 'woocommerce' ); ?></a>
                     <?php endif; ?>
                 </p>
                 
@@ -132,7 +132,7 @@ if ( isset( $is_popup ) ) {
                     <?php if ( $show_reg_form ) : ?>
                     <div class="nm-login-form-divider"><span><?php esc_html_e( 'Or', 'nm-framework' ); ?></span></div>
                     
-                    <a href="#" id="nm-show-login-button" class="button border"><?php esc_html_e( 'Log in', 'woocommerce' ); ?></a>
+                    <a href="#login" id="nm-show-login-button" class="button border"><?php esc_html_e( 'Log in', 'woocommerce' ); ?></a>
                     <?php endif; ?>
                 </p>
                 

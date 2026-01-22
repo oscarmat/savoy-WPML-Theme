@@ -3639,6 +3639,7 @@ body.theme-savoy:not(.woocommerce-block-theme-has-button-styles) .wc-block-compo
 .theme-savoy .wp-block-woocommerce-cart .wc-block-cart .wc-block-cart-item__wrap .wc-block-cart-item__quantity {
     min-height: 24px;
 }
+.theme-savoy table.wc-block-cart-items .wc-block-cart-items__row .wc-block-components-quantity-selector,
 .theme-savoy .wc-block-cart-item__quantity .wc-block-components-quantity-selector {
     margin-left: -7px;
     margin-bottom: 0;
@@ -3986,7 +3987,7 @@ body.theme-savoy:not(.woocommerce-block-theme-has-button-styles) .wc-block-compo
 }
 .theme-savoy .is-mobile .wc-block-checkout__terms.wc-block-checkout__terms--with-separator,
 .theme-savoy .is-small .wc-block-checkout__terms.wc-block-checkout__terms--with-separator {
-	/*padding-top: 0;*/
+	padding-top: 0;
 }
 @media (max-width: 600px) {
     .theme-savoy .is-mobile .wc-block-components-form .wc-block-components-checkout-step,
@@ -4042,6 +4043,7 @@ body.theme-savoy:not(.woocommerce-block-theme-has-button-styles) .wc-block-compo
 }
 /* Form: Terms and Conditions */
 @container (max-width: 699px) {
+    .theme-savoy .wc-block-checkout__terms.wc-block-checkout__terms--with-separator,
     .theme-savoy .wc-block-checkout__terms {
         padding-top: 0;
     }
@@ -4074,6 +4076,11 @@ body.theme-savoy:not(.woocommerce-block-theme-has-button-styles) .wc-block-compo
 @container (max-width: 699px) {
     .theme-savoy .wp-block-woocommerce-checkout-order-summary-block.checkout-order-summary-block-fill-wrapper {
         padding-bottom: 0;
+    }
+}
+@container (min-width: 400px) and (max-width: 519px) {
+    .theme-savoy .wc-block-checkout__actions {
+        padding-top: 0;
     }
 }
 @container (max-width: 399px) {

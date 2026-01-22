@@ -18,7 +18,7 @@ if ( ! empty( $_REQUEST['s'] ) ) { // Is search query set and not empty?
     $results_bar_buttons['search_taxonomy'] = array(
         'parent_class'  => 'nm-shop-search-reset',
         'id'            => 'nm-shop-search-taxonomy-reset',
-        'title'         => sprintf( esc_html__( 'Search results for %s&ldquo;%s&rdquo;%s', 'nm-framework' ), '<span>', esc_html( $_REQUEST['s'] ), '</span>' ),
+        'title'         => sprintf( esc_html__( 'Search results: &ldquo;%s&rdquo;', 'woocommerce' ), esc_html( $_REQUEST['s'] ) ),
     );
 }
 

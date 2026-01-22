@@ -41,6 +41,7 @@
                 self.$searchBtn = $('#nm-menu-search-btn');
                 self.$searchInput = $('#nm-header-search-input');
                 self.$searchNotice = $('#nm-header-search-notice');
+                self.$searchKeywords = $('#nm-search-keywords');
                 
                 self.headerSearchBind();
             }
@@ -134,12 +135,16 @@
                     validSearch = self.searchValidateInput(searchKey);
                 
                 if (validSearch === 'valid') {
+                    self.headerSearchKeywordsHide();
+                    
                     if (self.suggestions) {
                         self.suggestionsGet(searchKey);
                     } else {
                         self.searchShowNotice();
                     }
                 } else if (validSearch === 'invalid') {
+                    self.headerSearchKeywordsShow();
+                    
                     if (self.suggestions) {
                         self.suggestionsHide();   
                     } else {
@@ -173,6 +178,21 @@
                     self.headerSearchTogglePanel();
                 }
             });
+            
+            /* Bind: Clear search button */
+            $('#nm-header-search-clear-button').on('click', function(e) {
+                e.preventDefault();
+                self.$searchInput.val('').trigger('input');
+            });
+            
+            /* Bind: Keyword buttons - Show search suggestions */
+            if (self.suggestions) {
+                self.$searchKeywords.on('click', '.button', function(e) {
+                    e.preventDefault();
+                    var keyword = $(this).text();
+                    self.$searchInput.val(keyword).focus().trigger('input');
+                });
+            }
 		},
         
         
@@ -218,6 +238,8 @@
                         /*if (self.suggestions) {
                             self.suggestionsHide();
                         }*/
+                        
+                        self.headerSearchKeywordsShow();
                     }, self.panelsAnimSpeed + 150);
                 }
 
@@ -228,6 +250,28 @@
             // Return toggleDelay so it can be used when overlay is clicked
             return toggleDelay;
 		},
+        
+        
+        /**
+         *  Header search: Hide keywords
+         */
+        headerSearchKeywordsHide: function() {
+            var self = this;
+            self.$searchKeywords.addClass('hide').removeClass('show');
+        },
+        
+        
+        /**
+         *  Header search: Show keywords
+         */
+        headerSearchKeywordsShow: function() {
+            var self = this;
+            
+            self.$searchKeywords.removeClass('hide');
+            setTimeout(function() {
+                self.$searchKeywords.addClass('show');
+            }, 50);
+        },
         
         
         /**
@@ -522,6 +566,8 @@
                 var noticeTxtClass = (resultCount == self.suggestionsMaxResults) ? 'press-enter' : 'has-results';
             }
             $('#nm-search-suggestions-notice').removeClass().addClass('show ' + noticeTxtClass);
+            
+            self.$searchPanel.addClass('has-suggestions');
         },
         
         
@@ -539,6 +585,8 @@
             $('#nm-search-suggestions-product-list').html('');
             $('#nm-search-suggestions').removeClass();
             $('#nm-search-suggestions-notice').removeClass();
+            
+            self.$searchPanel.removeClass('has-suggestions');
             
             self.searchCurrentQuery = '';
         },

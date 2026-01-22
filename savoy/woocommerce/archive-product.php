@@ -58,7 +58,10 @@ if ( $is_product_taxonomy ) {
     $show_taxonomy_heading     = ( $nm_theme_options['shop_content_taxonomy'] == 'taxonomy_heading' ) ? true : false;
     $show_taxonomy_description = ( ! $show_taxonomy_header && $nm_theme_options['shop_category_description'] ) ? true : false;
 } else if ( is_search() ) {
+    // Search: Always show either Header or Heading
     $show_shop_page = apply_filters( 'nm_shop_search_page_content', false );
+    $show_taxonomy_header      = ( $nm_theme_options['shop_content_taxonomy'] == 'taxonomy_header' ) ? true : false;
+    $show_taxonomy_heading     = ( ! $show_taxonomy_header ) ? true : false;
 }
 
 // Shop page

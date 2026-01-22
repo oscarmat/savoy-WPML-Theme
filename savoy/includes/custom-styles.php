@@ -106,6 +106,7 @@ function nm_custom_styles_generate( $action_value_placeholder = null, $save_styl
     --nm--color-font-strong:<?php echo esc_attr( $nm_theme_options['font_strong_color'] ); ?>;
     --nm--color-font-highlight:<?php echo esc_attr( $nm_theme_options['highlight_color'] ); ?>;
     --nm--color-border:<?php echo esc_attr( $nm_theme_options['borders_color'] ); ?>;
+    --nm--color-divider:<?php echo esc_attr( $nm_theme_options['dividers_color'] ); ?>;
     --nm--color-button:<?php echo esc_attr( $nm_theme_options['button_font_color'] ); ?>;
 	--nm--color-button-background:<?php echo esc_attr( $nm_theme_options['button_background_color'] ); ?>;
     --nm--color-body-background:<?php echo esc_attr( $nm_theme_options['main_background_color'] ); ?>;
@@ -114,6 +115,10 @@ function nm_custom_styles_generate( $action_value_placeholder = null, $save_styl
     --nm--border-radius-image-fullwidth:<?php echo intval( apply_filters( 'nm_border_radius_image_fullwidth', 0 ) ); ?>px;
     --nm--border-radius-inputs:<?php echo intval( $nm_theme_options['border_radius_form_inputs'] ); ?>px;
     --nm--border-radius-button:<?php echo intval( $nm_theme_options['border_radius_button'] ); ?>px;
+    --nm--mobile-menu-color-font:<?php echo esc_attr( $nm_theme_options['slide_menu_font_color'] ); ?>;
+    --nm--mobile-menu-color-font-hover:<?php echo esc_attr( $nm_theme_options['slide_menu_font_highlight_color'] ); ?>;
+    --nm--mobile-menu-color-border:<?php echo esc_attr( $nm_theme_options['slide_menu_border_color'] ); ?>;
+    --nm--mobile-menu-color-background:<?php echo esc_attr( $nm_theme_options['slide_menu_background_color'] ); ?>;
     --nm--shop-preloader-color:<?php echo esc_attr( $preloader_background_color ); ?>;
     --nm--shop-preloader-gradient:<?php echo esc_attr( $preloader_foreground_gradient ); ?>;
     --nm--shop-rating-color:<?php echo esc_attr( $nm_theme_options['shop_rating_color'] ); ?>;
@@ -947,6 +952,7 @@ input[type=submit]:hover
 	padding-bottom:<?php echo intval( $nm_theme_options['header_spacing_bottom_alt'] ); ?>px;
 }
 .nm-header.stacked .nm-header-logo,
+.nm-header.stacked-logo-centered .nm-header-logo,
 .nm-header.stacked-centered .nm-header-logo
 {
     padding-bottom:<?php echo intval( $nm_theme_options['logo_spacing_bottom'] ); ?>px;
@@ -969,6 +975,7 @@ input[type=submit]:hover
         padding-bottom:<?php echo intval( $nm_theme_options['header_spacing_bottom_alt'] ); ?>px;
 	}
     .nm-header.stacked .nm-header-logo,
+    .nm-header.stacked-logo-centered .nm-header-logo,
     .nm-header.stacked-centered .nm-header-logo
     {
         padding-bottom:0px;
@@ -1097,16 +1104,6 @@ input[type=submit]:hover
 
 /* Mobile menu
 --------------------------------------------------------------- */
-#nm-mobile-menu
-{   
-    background:<?php echo esc_attr( $nm_theme_options['slide_menu_background_color'] ); ?>;
-}
-#nm-mobile-menu .menu li
-{
-    border-bottom-color:<?php echo esc_attr( $nm_theme_options['slide_menu_border_color'] ); ?>;
-}
-#nm-mobile-menu .menu a,
-#nm-mobile-menu .menu li .nm-menu-toggle,
 #nm-mobile-menu-top-ul .nm-mobile-menu-item-search input,
 #nm-mobile-menu-top-ul .nm-mobile-menu-item-search span,
 .nm-mobile-menu-social-ul li a
@@ -1120,10 +1117,6 @@ input[type=submit]:hover
 .nm-mobile-menu-social-ul li a:hover
 {
     color:<?php echo esc_attr( $nm_theme_options['slide_menu_font_highlight_color'] ); ?>;
-}
-#nm-mobile-menu .sub-menu
-{
-    border-top-color:<?php echo esc_attr( $nm_theme_options['slide_menu_border_color'] ); ?>;
 }
 
 /* Footer widgets
@@ -1391,13 +1384,13 @@ add_action( 'upgrader_process_complete', 'nm_custom_styles_generate_after_theme_
 
 
 /*
- *  v3.0.6/7/8 update: Make sure styles are regenerated
+ *  Theme update: Make sure styles are regenerated
  */
 if ( is_admin() ) {
-    $styles_updated = get_option( 'nm_theme_v308_styles_updated', false );
+    $styles_updated = get_option( 'nm_theme_v310_styles_updated', false );
     if ( ! $styles_updated ) {
         nm_custom_styles_generate();
-        update_option( 'nm_theme_v308_styles_updated', '1' );
+        update_option( 'nm_theme_v310_styles_updated', '1' );
     }
 }
 

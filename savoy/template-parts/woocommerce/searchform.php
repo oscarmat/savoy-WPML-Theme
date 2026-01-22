@@ -1,17 +1,46 @@
+<?php
+    global $nm_theme_options;
+?>
 <div id="nm-header-search">
     <a href="#" id="nm-header-search-close" class="nm-font nm-font-close2"></a>
     
     <div class="nm-header-search-wrap">
         <div class="nm-header-search-form-wrap">
             <form id="nm-header-search-form" role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>">
+                <a id="nm-header-search-clear-button" class="button border">
+                    <i class="nm-font-close2"></i>
+                    <span><?php esc_html_e( 'Clear', 'woocommerce' ); ?></span>
+                </a>
                 <i class="nm-font nm-font-search"></i>
                 <input type="text" id="nm-header-search-input" autocomplete="off" value="" name="s" placeholder="<?php esc_attr_e( 'Search products', 'woocommerce' ); ?>&hellip;" />
                 <input type="hidden" name="post_type" value="product" />
             </form>
         </div>
-
+        
         <?php
-            global $nm_theme_options;
+            if ( strlen( $nm_theme_options['shop_search_keywords'] ) > 1 ) :
+        
+            $search_keywords = explode( ',', $nm_theme_options['shop_search_keywords'] );
+        ?>
+        <div id="nm-search-keywords" class="show">
+            <strong class="nm-search-keywords-title"><?php echo esc_html( $nm_theme_options['shop_search_keywords_title'] ); ?></strong>
+            <ul class="nm-search-keywords-list">
+            <?php
+                foreach ( $search_keywords as $search_keyword ) {
+                    $search_keyword = preg_replace( '/\s+/','', $search_keyword ); // Remove whitespace
+                    
+                    printf(
+                        '<li><a href="%s" class="button border"><i class="nm-font-search"></i>%s</a></li>',
+                        esc_url( home_url( '?s=' . $search_keyword . '&post_type=product' ) ),
+                        esc_html( $search_keyword )
+                    );
+                }
+            ?>
+            </ul>
+        </div>
+        <?php endif; ?>
+        
+        <?php
             if ( $nm_theme_options['shop_search_suggestions'] ) :
             
             // Column class

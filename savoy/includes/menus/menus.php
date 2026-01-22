@@ -1,5 +1,28 @@
 <?php
     /*
+     * Mobile menus: Include custom menu "walker" class
+     */
+    include( NM_DIR . '/menus/class-walker-nav-menu-mobile.php' );
+    
+    
+    /*
+     * Mobile menu - Panels: Set back button title
+     */
+    /*function nm_nav_menu_store_item_title( $item_output, $item, $depth, $args ) {
+        global $nm_mobile_menu_back_button_title;
+        $nm_mobile_menu_back_button_title = $item->title;
+        
+        return $item_output;
+    }
+    add_filter( 'walker_nav_menu_start_el', 'nm_nav_menu_store_item_title', 10, 4 );*/
+    function nm_mobile_menu_set_back_button_title() {
+        global $nm_mobile_menu_back_button_title;
+        $nm_mobile_menu_back_button_title = esc_html__( 'Back', 'woocommerce' );
+    }
+    add_filter( 'init', 'nm_mobile_menu_set_back_button_title', 10 );
+    
+    
+    /*
      * Menus: Include custom menu "walker" class
      */
     include( NM_DIR . '/menus/class-walker-nav-menu.php' );

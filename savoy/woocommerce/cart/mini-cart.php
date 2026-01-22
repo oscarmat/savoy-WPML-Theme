@@ -24,6 +24,7 @@ global $nm_theme_options;
 if ( WC()->cart ) : // Note: WC()->cart->is_empty() is used below (don't add this here)
 
 $nm_cart_empty_class = ( WC()->cart->is_empty() ) ? ' nm-cart-panel-empty' : '';
+$nm_cart_empty_icon_class = apply_filters( 'nm_cart_empty_icon_class', 'nm-font-close2' );
 ?>
 
 <form id="nm-cart-panel-form" action="<?php echo esc_url( wc_get_cart_url() ); ?>" method="post">
@@ -154,9 +155,9 @@ $nm_cart_empty_class = ( WC()->cart->is_empty() ) ? ' nm-cart-panel-empty' : '';
             </div>
         </li>
         <?php endif; ?>
-
+        
         <li class="empty">
-            <i class="nm-font nm-font-close2"></i>
+            <i class="<?php echo esc_attr( $nm_cart_empty_icon_class ); ?>"></i>
             <span><?php esc_html_e( 'No products in the cart.', 'woocommerce' ); ?></span>
         </li>
     </ul>

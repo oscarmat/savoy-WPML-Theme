@@ -1,11 +1,40 @@
 <?php 
     global $nm_theme_options, $nm_globals;
     
-    $show_search = ( $nm_globals['shop_search_header'] ) ? apply_filters( 'nm_mobile_menu_search', false ) : false;
-
-    $menu_allow_icons = apply_filters( 'nm_mobile_menu_allow_icons', false );
+    $is_side_layout     = ( $nm_theme_options['menu_mobile_layout'] === 'side' ) ? true : false;
+    $show_search        = ( $nm_globals['shop_search_header'] ) ? apply_filters( 'nm_mobile_menu_search', false ) : false;
+    $menu_allow_icons   = apply_filters( 'nm_mobile_menu_allow_icons', false );
 ?>
 <div id="nm-mobile-menu" class="nm-mobile-menu">
+    <?php if ( $is_side_layout ) : ?>
+    <div class="nm-mobile-menu-header">
+        <div class="nm-row">
+            <div class="col-xs-12">
+                <div class="nm-mobile-menu-header-inner">
+                    <a id="nm-mobile-menu-close-button"><i class="nm-font-close2"></i></a>
+
+                    <?php
+                        // Login/My Account
+                        if ( nm_woocommerce_activated() && $nm_theme_options['menu_login'] ) {
+                            $myaccount_url = get_permalink( get_option( 'woocommerce_myaccount_page_id' ) );
+
+                            $link_icon = apply_filters( 'nm_myaccount_icon', $nm_theme_options['menu_login_icon_html'], 'nm-font nm-font-user' );
+                            $link_title = ( is_user_logged_in() ) ? esc_html__( 'My account', 'woocommerce' ) : esc_html__( 'Login', 'woocommerce' );
+
+                            printf(
+                                '<a href="%s" id="nm-mobile-menu-account-btn">%s <span>%s</span></a>',
+                                esc_url( $myaccount_url ),
+                                $link_icon,
+                                $link_title
+                            );
+                        }
+                    ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php endif; ?>
+    
     <div class="nm-mobile-menu-scroll">
         <div class="nm-mobile-menu-content">
             <div class="nm-row">
@@ -35,6 +64,7 @@
                                 'container'       	=> false,
                                 'fallback_cb'     	=> false,
                                 'after' 	 		=> '<span class="nm-menu-toggle"></span>',
+                                'walker'            => new NM_Sublevel_Walker_Mobile,
                                 'items_wrap'      	=> '%3$s'
                             ) );
                         } else {
@@ -44,6 +74,7 @@
                                 'container'       	=> false,
                                 'fallback_cb'     	=> false,
                                 'after' 	 		=> '<span class="nm-menu-toggle"></span>',
+                                'walker'            => new NM_Sublevel_Walker_Mobile,
                                 'items_wrap'      	=> '%3$s'
                             ) );
 
@@ -70,31 +101,10 @@
                         <?php
                         $menu_links = array();
                         
-                        // Cart
-                        if ( $nm_globals['cart_link'] ) {
-                            $menu_links['cart'] = sprintf( '<li class="nm-mobile-menu-item-cart menu-item"><a href="%s" id="nm-mobile-menu-cart-btn">%s %s</a></li>',
-                                esc_url( wc_get_cart_url() ),
-                                nm_get_cart_title( $menu_allow_icons ), // Args: $allow_icon
-                                nm_get_cart_contents_count()
-                            );
-                        }
-                        
-                        // Login/My Account
-                        if ( nm_woocommerce_activated() && $nm_theme_options['menu_login'] ) {
-                            $menu_links['my_account'] = '<li class="nm-menu-item-login menu-item">' . nm_get_myaccount_link( $menu_allow_icons, true ) . '</li>'; // Args: $allow_icon, $is_mobile_menu
-                        }
-                        
-                        // Wishlist
-                        if ( $nm_globals['wishlist_enabled'] && $nm_theme_options['menu_wishlist'] ) {
-                            $wishlist_link_escaped = ( function_exists( 'nm_wishlist_get_header_link' ) ) ? nm_wishlist_get_header_link( $menu_allow_icons ) : ''; // Args: $allow_icon
-                            $menu_links['wishlist'] = '<li class="nm-menu-item-wishlist menu-item">' . $wishlist_link_escaped . '</li>';
-                        }
-                        
-                        // Top bar menu
-                        $include_top_bar_menu = apply_filters( 'nm_mobile_menu_secondary_top_bar', false );
-                        if ( $include_top_bar_menu && $nm_theme_options['top_bar'] ) {
+                        // Mobile secondary menu
+                        if ( has_nav_menu( 'mobile-menu-secondary' ) ) {
                             $menu_links['top_bar'] = wp_nav_menu( array(
-                                'theme_location'	=> 'top-bar-menu',
+                                'theme_location'	=> 'mobile-menu-secondary',
                                 'container'       	=> false,
                                 'fallback_cb'     	=> false,
                                 'after' 	 		=> '<span class="nm-menu-toggle"></span>',
@@ -103,9 +113,32 @@
                             ) );
                         }
                         
+                        // WooCommerce links
+                        if ( ! $is_side_layout && nm_woocommerce_activated() ) {
+                            // Cart
+                            /*if ( $nm_globals['cart_link'] ) {
+                                $menu_links['cart'] = sprintf( '<li class="nm-mobile-menu-item-cart menu-item"><a href="%s" id="nm-mobile-menu-cart-btn">%s %s</a></li>',
+                                    esc_url( wc_get_cart_url() ),
+                                    nm_get_cart_title( $menu_allow_icons ), // Args: $allow_icon
+                                    nm_get_cart_contents_count()
+                                );
+                            }*/
+
+                            // Login/My Account
+                            if ( $nm_theme_options['menu_login'] ) {
+                                $menu_links['my_account'] = '<li class="nm-menu-item-login menu-item">' . nm_get_myaccount_link( $menu_allow_icons, true ) . '</li>'; // Args: $allow_icon, $is_mobile_menu
+                            }
+
+                            // Wishlist
+                            if ( $nm_globals['wishlist_enabled'] && $nm_theme_options['menu_wishlist'] ) {
+                                $wishlist_link_escaped = ( function_exists( 'nm_wishlist_get_header_link' ) ) ? nm_wishlist_get_header_link( $menu_allow_icons ) : ''; // Args: $allow_icon
+                                $menu_links['wishlist'] = '<li class="nm-menu-item-wishlist menu-item">' . $wishlist_link_escaped . '</li>';
+                            }
+                        }
+                        
                         $menu_links = apply_filters( 'nm_mobile_menu_secondary_links', $menu_links );
                         foreach( $menu_links as $menu_link ) {
-                            echo $menu_link;
+                            echo $menu_link; // Escaped
                         }
                         ?>
                         

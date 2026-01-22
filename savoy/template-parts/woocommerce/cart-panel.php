@@ -7,7 +7,7 @@
         <div class="nm-cart-panel-header-inner">
             <a href="#" id="nm-cart-panel-close">
                 <span class="nm-cart-panel-title"><?php esc_html_e( 'Cart', 'woocommerce' ); ?></span>
-                <span class="nm-cart-panel-close-title"><?php esc_html_e( 'Close', 'woocommerce' ); ?></span>
+                <span class="nm-cart-panel-close-title"><i class="nm-font-close2"></i></span>
             </a>
         </div>
     </div>
